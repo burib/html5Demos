@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>dialog demo - html 5.2</title>
+  <!-- Dialog Polyfill START -->
+  <link rel="stylesheet" href="dialog-polyfill.css">
+  <script src="dialog-polyfill.js"></script>
+  <!-- Dialog Polyfill END -->
+
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    /* native backdrop */
+    dialog::backdrop {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    /* polyfill backdrop */
+    dialog + .backdrop {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <h1>Native HTML 5.2 Dialog Modal Demo</h1>
+  <p>And a polyfill makes this usable today.</p>
+  <button id="open-modal" type="button" class="btn btn-primary">
+    Show me the modal
+  </button> <span id="return-value"></span>
+
+  <dialog id="demo-modal">
+    <h3 class="modal-header">A native modal dialog box<button id="close" class="close" type="button">&times;</button></h3>
+    <div class="modal-body">
+      <p>Native HTML 5.2 Dialog</p>
+      <p>And a <a href="https://github.com/GoogleChrome/dialog-polyfill" target="_blank">polyfill</a> makes this usable today.</p>
+    </div>
+    <footer class="modal-footer">
+      <button id="save" type="button" class="btn btn-primary">Save</button>
+      <button id="cancel" type="button" class="btn btn-secondary">Cancel</button>
+    </footer>
+  </dialog>
+
+  <h4>Browser Support</h4>
+
+  <p class="ciu_embed" data-feature="dialog" data-periods="future_1,current,past_1,past_2" data-accessible-colours="true" style="width: 600px">
+    <a href="http://caniuse.com/#feat=dialog">Can I Use dialog?</a> Data on support for the dialog feature across the major browsers from caniuse.com.
+  </p>
+
+  <p style="width: 25%">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolores ea expedita, in itaque maiores provident recusandae! Assumenda corporis ea eaque expedita facere illo pariatur sequi, similique tempora unde voluptatibus.</p>
+  <p style="width: 25%">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolores ea expedita, in itaque maiores provident recusandae! Assumenda corporis ea eaque expedita facere illo pariatur sequi, similique tempora unde voluptatibus.</p>
+  <p style="width: 25%">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolores ea expedita, in itaque maiores provident recusandae! Assumenda corporis ea eaque expedita facere illo pariatur sequi, similique tempora unde voluptatibus.</p>
+  <p style="width: 25%">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolores ea expedita, in itaque maiores provident recusandae! Assumenda corporis ea eaque expedita facere illo pariatur sequi, similique tempora unde voluptatibus.</p>
+  <p style="width: 25%">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolores ea expedita, in itaque maiores provident recusandae! Assumenda corporis ea eaque expedita facere illo pariatur sequi, similique tempora unde voluptatibus.</p>
+  <p style="width: 25%">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolores ea expedita, in itaque maiores provident recusandae! Assumenda corporis ea eaque expedita facere illo pariatur sequi, similique tempora unde voluptatibus.</p>
+  <p style="width: 25%">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolores ea expedita, in itaque maiores provident recusandae! Assumenda corporis ea eaque expedita facere illo pariatur sequi, similique tempora unde voluptatibus.</p>
+  <p style="width: 25%">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolores ea expedita, in itaque maiores provident recusandae! Assumenda corporis ea eaque expedita facere illo pariatur sequi, similique tempora unde voluptatibus.</p>
+  <p style="width: 25%">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolores ea expedita, in itaque maiores provident recusandae! Assumenda corporis ea eaque expedita facere illo pariatur sequi, similique tempora unde voluptatibus.</p>
+
+  <script>
+    const modal = document.getElementById('demo-modal');
+    const open = document.getElementById('open-modal');
+
+    const close = document.getElementById('close');
+    const saveBtn = document.getElementById('save');
+    const cancelBtn = document.getElementById('cancel');
+    const returnSpan = document.getElementById('return-value');
+
+    dialogPolyfill.registerDialog(modal);
+
+    open.addEventListener('click', function() {
+      modal.showModal('showing modal')
+    });
+
+    save.addEventListener('click', function() {
+      modal.close('save by clicking on Save button');
+    });
+
+    cancelBtn.addEventListener('click', function() {
+      modal.close('closed by clicking on cancel button');
+    });
+
+    close.addEventListener('click', function() {
+      modal.close('closed by clicking on X button');
+    });
+
+    modal.addEventListener('cancel', function() {
+      modal.close('closed by pressing ESC');
+    });
+
+    // close when clicking on backdrop
+    modal.addEventListener('click', function(event) {
+      if (event.target === modal) {
+        modal.close('closed by clicking on backdrop');
+      }
+    });
+
+    // display returnValue
+    modal.addEventListener('close', function() {
+      returnSpan.innerHTML = "<strong>dialog event:</strong> " + modal.returnValue;
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/gh/ireade/caniuse-embed/caniuse-embed.min.js"></script>
+</body>
+</html>
